@@ -26,3 +26,5 @@ t.hideturtle()
 print("dibujo terminado")
 input("presiona enter para salir")
 turtle.done()
+
+print ("hola")
