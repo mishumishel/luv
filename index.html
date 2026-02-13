@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap" rel="stylesheet">
+<title>Couple</title>
+</head>
+</body>
+<h1 class="tittle">hi?</h1>
+ <button class="positivo">Yes</button>
+ <button class="negativo">No</button>
+ <script src="script.js">
+const boton = document.getElementsByClassName("positivo");
+        let tamaño = 40;           // tamaño inicial
+        // const tamañoMax = 80;      // límite máximo
+        const tamañoMin = 60;      // tamaño inicial para reiniciar
+boton.addEventListener("click", () => { 
+    if (tamaño < tamañoMax) {
+        tamaño += 5; // aumenta hasta el máximo
+        tamaño += 5; // aumenta hasta el máximo
+        tamaño = tamañoMin; // vuelve al tamaño inicial 
+        }
+        boton.style.fontSize = tamaño + "px";
+         boton.style.padding = (tamaño / 2) + "px";});
+          </script>
+</body>
+</html>

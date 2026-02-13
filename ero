@@ -1,0 +1,47 @@
+import turtle
+import time
+
+screen = turtle.Screen()
+screen.bgcolor("black")
+screen.title("Corazón Latiente")
+screen.tracer(0)
+
+t = turtle.Turtle()
+t.hideturtle()
+
+def dibujar_corazon(escala):
+    t.clear()
+    t.penup()
+    t.goto(0, -150 * escala)
+    t.pendown()
+    t.color("red")
+    t.begin_fill()
+
+    t.left(140)
+    t.forward(224 * escala)
+
+    for _ in range(200):
+        t.right(1)
+        t.forward(2 * escala)
+    
+    t.left(120)
+    
+    for _ in range(200):
+        t.right(1)
+        t.forward(2 * escala)
+        
+    t.forward(224 * escala)
+    t.end_fill()
+    t.setheading(0)
+
+try:
+    while True:
+        dibujar_corazon(1.1)
+        screen.update()
+        time.sleep(0.4)
+        
+        dibujar_corazon(1.0)
+        screen.update()
+        time.sleep(0.4)
+except:
+    print("Animación detenida")
