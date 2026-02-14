@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrella MC - Star Station</title>
+    <style>
+        body {
+            background-color: black;
+            color: #4d4dff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            flex-direction: column;
+            text-transform: uppercase;
+        }
+
+        #game-container {
+            text-align: center;
+            width: 80%;
+        }
+
+        #mc-container {
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .star-sprite {
+            width: 200px;
+            image-rendering: pixelated;
+            transition: opacity 0.5s ease;
+        }
+
+
+        #dialogue-box {
+            font-size: 22px;
+            min-height: 80px;
+            line-height: 1.5;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        .choices {
+            display: none;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: transparent;
+            color: #4d4dff;
+            border: 2px solid #4d4dff;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #4d4dff;
+            color: black;
+            box-shadow: 0 0 15px #4d4dff;
+        }
+
+        #instructions {
+            position: fixed;
+            bottom: 20px;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        .choices {
+            display: none;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            background: transparent;
+            color: #4d4dff;
+            border: 2px solid #4d4dff;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #4d4dff;
+            color: black;
+            box-shadow: 0 0 15px #4d4dff;
+        }
+
+        #instructions {
+            position: fixed;
+            bottom: 20px;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+    
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="mc-container">
+        <svg id="star-svg" class="star-sprite" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 5L63 38H98L70 58L81 92L50 72L19 92L30 58L2 38H37L50 5Z" stroke="#4d4dff" stroke-width="5" fill="black"/>
+            <rect x="42" y="45" width="4" height="12" fill="#4d4dff"/>
+            <rect x="54" y="45" width="4" height="12" fill="#4d4dff"/>
+        </svg>
+    </div>
+
+    <div id="dialogue-box">PRESIONE ENTER PARA COMENZAR</div>
+
+    <div id="choices-container" class="choices">
+        <button class="btn" onclick="makeChoice('si')">ACEPTO</button>
+        <button class="btn" onclick="makeChoice('no')">NO</button>
+    </div>
+</div>
+
+<div id="instructions">ENTER para inicio | ESPACIO para avanzar</div>
+
+<script>
+    const dialogues = [
+        "Hola... Adios",
+        "Es broma",
+        "Ahora si, hola, trabaje un poco en esto porque no es algo que suelo hacer.",
+        "Bueno, es algo que realmente nunca hice",
+        "Que raro TT",
+        "Dios, me siento melosa haciendo esto...",
+        "Bueño",
+        "Vamos a casarnos en la estación espacial",
+        "Aceptas si o no?"
+    ];
+
+    let currentStep = -1;
+    let isTyping = false;
+    const dialogueBox = document.getElementById('dialogue-box');
+    const star = document.getElementById('star-svg');
+    const choicesContainer = document.getElementById('choices-container');
+
+    function typeWriter(text, i = 0) {
+        if (i === 0) {
+            isTyping = true;
+            dialogueBox.innerHTML = "";
+        }
+        
+        if (i < text.length) {
+            dialogueBox.innerHTML += text.charAt(i);
+            setTimeout(() => typeWriter(text, i + 1), 40);
+        } else {
+            isTyping = false;
+        }
+    }
+
+    function nextStep() {
+        if (isTyping) return;
+        
+        currentStep++;
+        if (currentStep < dialogues.length) {
+            typeWriter(dialogues[currentStep]);
+
+
+            if (currentStep === 0) {
+
+                setTimeout(() => { star.style.opacity = "0"; }, 500);
+            } else if (currentStep === 1) {
+                star.style.opacity = "1";
+            }
+
+            if (currentStep === dialogues.length - 1) {
+                setTimeout(() => {
+                    choicesContainer.style.display = "flex";
+                }, 1000);
+            }
+        }
+    }
+
+    function makeChoice(option) {
+        choicesContainer.style.display = "none";
+
+        if (option === 'si') {
+            dialogueBox.innerHTML = "Creating new world...";
+
+            document.getElementById('mc-container').innerHTML = "<div style='font-size:80px'>⏳</div>";
+        } else {
+            star.style.display = "none";
+            dialogueBox.innerHTML = "GAME OVER";
+            dialogueBox.classList.add('game-over-text');
+            document.body.style.backgroundColor = "black";
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && currentStep === -1) {
+            nextStep();
+        } else if (e.key === ' ' && currentStep >= 0 && currentStep < dialogues.length - 1) {
+            nextStep();
+        }
+    });
+</script>
+
+</body>
+</html>
